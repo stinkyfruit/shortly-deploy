@@ -99,7 +99,6 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-          'ls',
           'git push heroku master',
           'heroku open'
         ].join('&&')
@@ -148,7 +147,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
-      'shell'
+      grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
