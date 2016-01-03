@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'server.js'
+        script: 'index.js'
       }
     },
 
@@ -144,6 +144,14 @@ module.exports = function(grunt) {
     'concat',
     'uglify',
     'cssmin'
+  ]);
+
+  grunt.registerTask('heroku:production', [
+    'build'
+  ]);
+
+  grunt.registerTask('heroku:development', [
+    'build'
   ]);
 
   grunt.registerTask('upload', function(n) {
