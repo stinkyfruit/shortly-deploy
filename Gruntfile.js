@@ -3,22 +3,22 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      app: {
-        src: ['app/*.js', 'app/*/*.js'],
-        dest: 'dist/app-concat.js'
-      },
-      lib: {
-        src: ['lib/*.js'],
-        dest: 'dist/lib-concat.js'
-      },
+      // app: {
+      //   src: ['app/*.js', 'app/*/*.js'],
+      //   dest: 'dist/app-concat.js'
+      // },
+      // lib: {
+      //   src: ['lib/*.js'],
+      //   dest: 'dist/lib-concat.js'
+      // },
       pubClient: {
         src: 'public/client/*.js',
         dest: 'public/dist/client-concat.js'
-      },
-      server: {
-        src: ['index.js', 'server.js'],
-        dest: 'dist/server-concat.js'
       }
+      // server: {
+      //   src: ['index.js', 'server.js'],
+      //   dest: 'dist/server-concat.js'
+      // }
     },
 
     mochaTest: {
@@ -42,9 +42,9 @@ module.exports = function(grunt) {
           mangle: false
         },
         files: {
-          './dist/app-concat.min.js': ['./dist/app-concat.js'],
-          './dist/lib-concat.min.js': ['./dist/lib-concat.js'],
-          './dist/server-concat.min.js': ['./dist/server-concat.js'],
+          // './dist/app-concat.min.js': ['./dist/app-concat.js'],
+          // './dist/lib-concat.min.js': ['./dist/lib-concat.js'],
+          // './dist/server-concat.min.js': ['./dist/server-concat.js'],
           './public/dist/client-concat.min.js': ['./public/dist/client-concat.js']
         }
       }
@@ -98,6 +98,10 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: [
+          'git push heroku master',
+          'heroku open'
+        ]
       }
     },
   });
@@ -134,7 +138,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'jshint',
-    'test',
+    // 'test',
     'concat',
     'uglify',
     'cssmin'
@@ -143,6 +147,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      'shell'
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -150,7 +155,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
-
+    'build',
+    'upload'
   ]);
 
 
