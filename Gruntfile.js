@@ -5,7 +5,19 @@ module.exports = function(grunt) {
     concat: {
       app: {
         src: ['app/*.js', 'app/*/*.js'],
-        dest: 'app/concat.js'
+        dest: 'dist/app-concat.js'
+      },
+      lib: {
+        src: ['lib/*.js'],
+        dest: 'dist/lib-concat.js'
+      },
+      pubClient: {
+        src: 'public/client/*.js',
+        dest: 'public/dist/client-concat.js'
+      },
+      server: {
+        src: ['index.js', 'server.js'],
+        dest: 'dist/server-concat.js'
       }
     },
 
@@ -25,23 +37,46 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      dist: {
+        options: {
+          mangle: false
+        },
+        files: {
+          './dist/app-concat.min.js': ['./dist/app-concat.js'],
+          './dist/lib-concat.min.js': ['./dist/lib-concat.js'],
+          './dist/server-concat.min.js': ['./dist/server-concat.js'],
+          './public/dist/client-concat.min.js': ['./public/dist/client-concat.js']
+        }
+      }
     },
 
     jshint: {
       files: [
         // Add filespec list here
+        'app/*/*.js',
+        'app/*.js',
+        'lib/*.js',
+        'public/client/*.js',
+        'index.js',
+        'server.js'
       ],
       options: {
-        force: 'true',
+        force: false,
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
-          'public/dist/**/*.js'
+          'public/dist/**/*.js',
+          'dist/*.js'
         ]
       }
     },
 
     cssmin: {
+      dist: {
+        files: {
+          './public/dist/style.min.css': ['./public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -98,6 +133,11 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
+    'test',
+    'concat',
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -110,6 +150,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+
   ]);
 
 
