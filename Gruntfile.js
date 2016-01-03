@@ -102,7 +102,12 @@ module.exports = function(grunt) {
           'ls',
           'git push heroku master',
           'heroku open'
-        ].join('&&')
+        ].join('&&'),
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     },
   });
