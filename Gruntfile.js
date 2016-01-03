@@ -99,10 +99,8 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-          'ls',
-          'git push heroku master',
-          'heroku open'
-        ].join('&&'),
+          'git push heroku master'
+        ],
         options: {
           stdout: true,
           stderr: true,
